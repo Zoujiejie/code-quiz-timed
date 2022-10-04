@@ -53,3 +53,9 @@ button {
     border-radius: 30px;
     border-color: lightgray;
 }
+
+.answer-button {
+    width: 100%;
+    text-align: left;
+    margin: 5px;
+  }

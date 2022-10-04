@@ -10,7 +10,7 @@
 <body>
     <header>
         <a href="HighScores.html">View Highscores</a>
-        <p>Time: </p>
+        <p id="timer">Timer </p>
     </header>
 
     <main>
@@ -25,10 +25,10 @@
         <div hidden id=questions class="card">
             <h2 id=question-text></h2>
             <div id=answers>
-                <button id=answer1></button>
-                <button id=answer2></button>
+                <button id=answer1 class="button answer-button"></button>
+                <button id=answer2 class="button answer-button"></button>
             </div>
-
+            <hr>
             <div id=results>
                 <p id=result-text></p>
             </div>
@@ -51,7 +51,7 @@
             </div>
         </div>
     </main>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./script.js"></script>
 </body>
 
