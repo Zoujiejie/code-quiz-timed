@@ -5,6 +5,9 @@ var startCard = document.getElementById("start-card");
 var answerButton = document.getElementById("answer-button");
 var scoreCard = document.getElementById("scores");
 document.querySelector("#start-button").addEventListener("click", startQuiz);
+var currentQuestion = 0;
+
+var currentHighscore = localStorage.getItem("mytime");
 
 function startQuiz() {
     questionCard.style.display = 'block';
@@ -33,13 +36,26 @@ function gameEnds() {
     scoreCard.style.display = "block";
 }
 
-// document.querySelector("#answer1").addEventListener("click", continueQuiz);
-// document.querySelector("#answer2").addEventListener("click", continueQuiz);
+document.querySelector("#answer1").addEventListener("click", continueQuiz);
+document.querySelector("#answer2").addEventListener("click", continueQuiz);
 
-// function continueQuiz() {
-//     questionCard.style.display = 'none';
-//     scoreCard.style.display = "block";
-// };
+
+function continueQuiz(event) {
+    console.log(event.target);
+
+    if (currentQuestion < 2) {
+        if (event.target.value===options[currentQuestion].answer) {
+
+        }
+        currentQuestion++;
+        showQuestion();
+    }
+    else {
+        gameEnds()
+    }
+    // questionCard.style.display = 'none';
+    // scoreCard.style.display = "block";
+};
 
 // add questions
 // var questionText = document.getElementById("question-text");
@@ -47,7 +63,7 @@ function gameEnds() {
 // var answer1 = document.getElementById("answer1");
 // var answer2 = document.getElementById("answer2");
 
-var currentQuestion = 0;
+
 var options = [
     {
         questionText: "Which one is a self-closing tag?",
@@ -72,27 +88,20 @@ function showQuestion() {
     var questions = options[currentQuestion];
     var h2QuestionElement = document.querySelector("#question-text");
     h2QuestionElement.textContent = questions.questionText;
-    console.log(questions.questionText);
-    
+
     for (var i = 0; i < questions.answers.length; i++) {
         var answer = questions.answers[i];
-        let answersButton = document.querySelector("#answer" + i);
-    //     answerButton.textContent = answer;
+        let answersButton = document.querySelector("#answer" + (i + 1));
+        answersButton.textContent = answer;
 
-    // };
-    currentQuestion++;
-//     if (currentQuestion < questions.length) {
-//         showQuestion();
-//       } else {
-//         gameEnds();
-//       }
-};
-};
 
-function click(event) {
-    var actions = event.target;
-
-    if (actions.value === options[currentQuestion].answer) {
-        showQuestion();
+        // };
+        // currentQuestion++;
+        //     if (currentQuestion < questions.length) {
+        //         showQuestion();
+        //       } else {
+        //         gameEnds();
+        //       }
     };
-}
+};
+
