@@ -19,11 +19,13 @@ function startQuiz() {
         if (timeLeft < 0) {
             clearTimeout(timerId);
             gameEnds();
-        } else {
+        }
+        else {
             elem.innerHTML = timeLeft + ' seconds remaining';
             timeLeft--;
         }
-    }
+    };
+    showQuestion();
 };
 
 function gameEnds() {
@@ -31,19 +33,22 @@ function gameEnds() {
     scoreCard.style.display = "block";
 }
 
-document.querySelector("#answer1").addEventListener("click", continueQuiz);
-document.querySelector("#answer2").addEventListener("click", continueQuiz);
+// document.querySelector("#answer1").addEventListener("click", continueQuiz);
+// document.querySelector("#answer2").addEventListener("click", continueQuiz);
 
-function continueQuiz() {
-    questionCard.style.display = 'none';
-    scoreCard.style.display = "block";
-};
+// function continueQuiz() {
+//     questionCard.style.display = 'none';
+//     scoreCard.style.display = "block";
+// };
 
 // add questions
-var questionText = document.getElementById("question-text");
-var answers = document.getElementById("answers");
+// var questionText = document.getElementById("question-text");
+// var answers = document.getElementById("answers");
+// var answer1 = document.getElementById("answer1");
+// var answer2 = document.getElementById("answer2");
 
-var questions = [
+var currentQuestion = 0;
+var options = [
     {
         questionText: "Which one is a self-closing tag?",
         answers: ["1. <br>", "2. <form>"],
@@ -64,11 +69,30 @@ var questions = [
 ];
 
 function showQuestion() {
-    var questions = questions[i];
+    var questions = options[currentQuestion];
+    var h2QuestionElement = document.querySelector("#question-text");
+    h2QuestionElement.textContent = questions.questionText;
+    console.log(questions.questionText);
+    
+    for (var i = 0; i < questions.answers.length; i++) {
+        var answer = questions.answers[i];
+        let answersButton = document.querySelector("#answer" + i);
+    //     answerButton.textContent = answer;
 
-    questionText.textContent = question.questionText;
+    // };
+    currentQuestion++;
+//     if (currentQuestion < questions.length) {
+//         showQuestion();
+//       } else {
+//         gameEnds();
+//       }
+};
+};
 
-    for (var i = 0; i < questions.length; i++) {
+function click(event) {
+    var actions = event.target;
 
-    }
+    if (actions.value === options[currentQuestion].answer) {
+        showQuestion();
+    };
 }
