@@ -22,33 +22,35 @@ var options = [
 var startButton = document.getElementById("start-button");
 var questionCard = document.getElementById("questions");
 var startCard = document.getElementById("start-card");
-var answerButton = document.getElementById("answer-button");
+var answerButton = document.getElementsByClassName("answer-button");
 var scoreCard = document.getElementById("scores");
 document.querySelector("#start-button").addEventListener("click", startQuiz);
 var currentQuestion = 0;
 
 var currentHighscore = localStorage.getItem("mytime");
-var timeLeft = 30;
+var timeLeft = 60;
+
+var elem = document.getElementById('timer');
+
+
+function countdown() {
+    var timerId = setInterval(countdown, 1000);
+    if (timeLeft < 0) {
+        clearTimeout(timerId);
+        gameEnds();
+    }
+    else {
+        elem.innerHTML = timeLeft + ' seconds remaining';
+        timeLeft--;
+    }
+};
+
 
 function startQuiz() {
     questionCard.style.display = 'block';
     startCard.style.display = "none";
-
-    //add timer
-    var elem = document.getElementById('timer');
-    var timerId = setInterval(countdown, 1000);
-
-    function countdown() {
-        if (timeLeft < 0) {
-            clearTimeout(timerId);
-            gameEnds();
-        }
-        else {
-            elem.innerHTML = timeLeft + ' seconds remaining';
-            timeLeft--;
-        }
-    };
     showQuestion();
+    countdown();
 };
 
 function gameEnds() {
@@ -64,47 +66,6 @@ answer2.addEventListener("click", continueQuiz);
 
 var results = document.querySelector("#results");
 var resultText = document.querySelector("#result-text");
-
-function continueQuiz(event) {
-    // console.log(event.target);
-    var button = answer1.textContent;
-    var button2 = answer2.textContent;
-    results.style.display = "block";
-    console.log(button.value);
-    console.log(options[currentQuestion].answer);
-
-    if (button.value === options[currentQuestion].answer) {
-        resultText.textContent = "Correct!";
-        showQuestion();
-    } else {
-        resultText.textContent = "Incorrect!";
-        if (timeLeft >= 10) {
-            timeLeft = timeLeft - 10;
-            countdown();
-        } else {
-            timeLeft = 0;
-            countdown();
-            gameEnds();
-        }
-    }
-
-    currentQuestion++;
-
-    if (time <= 0 || currentQuestion === options.length) {
-        gameEnds();
-    } else {
-        showQuestion();
-    }
-};
-
-// questionCard.style.display = 'none';
-// scoreCard.style.display = "block";
-
-
-// add questions
-// var questionText = document.getElementById("question-text");
-// var answers = document.getElementById("answers");
-
 
 function showQuestion() {
     var questions = options[currentQuestion];
@@ -127,4 +88,44 @@ function showQuestion() {
     };
 };
 
-answerButton.onclick=continueQuiz;
+function continueQuiz(event) {
+    // console.log(event.target);
+    var button = answer1.textContent;
+    console.log(button);
+    var button2 = answer2.textContent;
+    results.style.display = "block";
+    // console.log(button.innerHTML);
+    console.log(options[currentQuestion].answer);
+
+        if (button === options[currentQuestion].answer && timeLeft > 0) {
+            resultText.textContent = "Correct!";
+            showQuestion();
+        } else {
+            resultText.textContent = "Incorrect!";
+            if (timeLeft >= 10) {
+                timeLeft = timeLeft - 10;
+                // countdown();
+            } else {
+                timeLeft = 0;
+                gameEnds();
+            }
+        }
+
+        currentQuestion++;
+
+        // if (time <= 0 || currentQuestion === options.length) {
+        //     gameEnds();
+        // } else {
+        //     showQuestion();
+        // }
+    };
+
+// questionCard.style.display = 'none';
+// scoreCard.style.display = "block";
+
+
+// add questions
+// var questionText = document.getElementById("question-text");
+// var answers = document.getElementById("answers");
+
+// answerButton.onclick = continueQuiz;
